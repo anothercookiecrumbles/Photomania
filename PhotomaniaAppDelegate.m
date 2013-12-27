@@ -21,7 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     self.photoDatabaseContext = [self createMainQueueManagedObjectContext];
-    
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     [self startFlickrFetch];
     return YES;
 }
@@ -29,7 +29,7 @@
 - (void) setPhotoDatabaseContext:(NSManagedObjectContext *)photoDatabaseContext {
     _photoDatabaseContext = photoDatabaseContext;
     
-    [NSTimer scheduledTimerWithTimeInterval:20*60 target:self selector:@selector(startFlickrFetch:) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:20*60 target:self selector:NSSelectorFromString(@"startFlickrFetch:") userInfo:nil repeats:YES];
     
     NSDictionary* userInfo = self.photoDatabaseContext ? @{ PhotoDatabaseAvailabilityContext: self.photoDatabaseContext } : nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:PhotoDatabaseAvailabilityNotification object:self userInfo:userInfo];

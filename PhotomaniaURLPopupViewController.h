@@ -1,5 +1,5 @@
 //
-//  PhotomaniaAppDelegate.h
+//  PhotomaniaURLPopupViewController.h
 //  Photomania
 //
 //  Created by Priyanjana Bengani on 27/12/2013.
@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PhotomaniaAppDelegate : UIResponder <UIApplicationDelegate>
+@interface PhotomaniaURLPopupViewController : UIViewController
 
-@property (strong, nonatomic) UIWindow *window;
+@property (strong,nonatomic) NSURL* url;
 
-- (void)startFlickrFetch;
 @end
