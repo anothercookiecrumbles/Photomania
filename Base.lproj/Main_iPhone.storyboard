@@ -14,7 +14,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Photo Cell" textLabel="wLk-Dh-zXL" detailTextLabel="M3U-w5-kmh" style="IBUITableViewCellStyleSubtitle" id="6aa-VC-j9X">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6aa-VC-j9X" id="0C8-ED-z5i">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -57,6 +57,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gVw-ib-y12" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="420" y="-440"/>
+        </scene>
+        <!--Photos By Photographer Map View Controller-->
+        <scene sceneID="11E-7x-YsE">
+            <objects>
+                <viewController id="70D-TA-CwI" customClass="PhotosByPhotographerMapViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="t4e-6w-Nbl"/>
+                        <viewControllerLayoutGuide type="bottom" id="oR4-4h-DMK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uae-w5-ofa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="opD-Dz-1U4">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="opD-Dz-1U4" firstAttribute="top" secondItem="uae-w5-ofa" secondAttribute="top" id="6gU-Yf-UwI"/>
+                            <constraint firstAttribute="trailing" secondItem="opD-Dz-1U4" secondAttribute="trailing" id="S8G-Gp-8CJ"/>
+                            <constraint firstItem="opD-Dz-1U4" firstAttribute="leading" secondItem="uae-w5-ofa" secondAttribute="leading" id="ei3-YF-M59"/>
+                            <constraint firstAttribute="bottom" secondItem="opD-Dz-1U4" secondAttribute="bottom" id="zrJ-Ex-NdB"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="fGU-zb-7d1"/>
+                    <connections>
+                        <outlet property="mapView" destination="opD-Dz-1U4" id="O5s-ge-0Vo"/>
+                        <segue destination="VNH-h7-Qfc" kind="push" identifier="Show Photo" id="Ef3-IK-u0H"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bnq-zS-kLh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="418" y="288"/>
         </scene>
         <!--Navigation Controller - Photographers-->
         <scene sceneID="VNQ-JO-VaG">
@@ -113,7 +148,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="glF-Zi-W8M" kind="push" identifier="Show Photos By Photographer" id="cmN-No-ecM"/>
+                                    <segue destination="70D-TA-CwI" kind="push" id="dUz-zu-v2o"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -168,7 +203,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2aR-pg-cOp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="848" y="-440"/>
+            <point key="canvasLocation" x="962" y="-440"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -176,4 +211,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ef3-IK-u0H"/>
+    </inferredMetricsTieBreakers>
 </document>

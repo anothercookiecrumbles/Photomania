@@ -16,6 +16,9 @@
 @dynamic subtitle;
 @dynamic title;
 @dynamic uniqueId;
+@dynamic latitude;
+@dynamic longitude;
+@dynamic thumbnailURL;
 @dynamic whoTook;
 
 @end

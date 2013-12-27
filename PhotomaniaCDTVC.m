@@ -10,6 +10,8 @@
 #import "Photographer+Create.h"
 #import "PhotoDatabaseAvailability.h"
 #import "PhotosByPhotographerCDTVC.h"
+#import "PhotosByPhotographerMapViewController.h"
+#import "PhotosByPhotographerImageViewController.h"
 
 @interface PhotomaniaCDTVC ()
 
@@ -50,10 +52,22 @@
 - (void) prepareViewController:(id) vc forSegue:(NSString*) segueIdentifier fromIndexPath:(NSIndexPath*) indexPath {
     Photographer* photographer = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if ([vc isKindOfClass:[PhotosByPhotographerCDTVC class]]) {
-        if (![segueIdentifier length] || [segueIdentifier isEqualToString:@"Show Photos By Photographer"]) {
+//        if (![segueIdentifier length] || [segueIdentifier isEqualToString:@"Show Photos By Photographer"]) {
             PhotosByPhotographerCDTVC* pbp = (PhotosByPhotographerCDTVC*) vc;
             pbp.photographer = photographer;
-        }
+//        }
+    }
+    else if ([vc isKindOfClass:[PhotosByPhotographerMapViewController class]]) {
+//        if (![segueIdentifier length] || [segueIdentifier isEqualToString:@"Show Photos By Photographer"]) {
+            PhotosByPhotographerMapViewController* pbp = (PhotosByPhotographerMapViewController*) vc;
+            pbp.photographer = photographer;
+//        }
+    }
+    else if ([vc isKindOfClass:[PhotosByPhotographerImageViewController class]]) {
+//        if (![segueIdentifier length] || [segueIdentifier isEqualToString:@"Show Photos By Photographer"]) {
+            PhotosByPhotographerImageViewController* pbp = (PhotosByPhotographerImageViewController*) vc;
+            pbp.photographer = photographer;
+//        }
     }
 }
 
