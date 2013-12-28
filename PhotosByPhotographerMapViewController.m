@@ -10,9 +10,12 @@
 #import <MapKit/MapKit.h>
 #import "Photo+Annotation.h"
 #import "ImaginariumImageViewController.h"
+#import "Photographer+Create.h"
+#import "PhotomaniaAddPhotoViewController.h"
 
 @interface PhotosByPhotographerMapViewController () <MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addPhotoBarButtonItem;
 @property (nonatomic,strong) NSArray* photosByPhotographer;
 @property (nonatomic,strong) ImaginariumImageViewController* imageViewController;
 @end
@@ -38,6 +41,23 @@
     self.title = photographer.name;
     _photosByPhotographer = nil; // must reset, else lazy instantiation will not happen.
     [self updateMapViewAnnotations];
+    [self updateAddPhotoBarButtonItem];
+}
+
+- (void) updateAddPhotoBarButtonItem {
+    if (self.addPhotoBarButtonItem) {
+        BOOL canAddPhoto = self.photographer.isUser;
+        NSMutableArray* rightBarButtonItems = [self.navigationItem.rightBarButtonItems mutableCopy];
+        if (!rightBarButtonItems) rightBarButtonItems = [NSMutableArray new];
+        NSUInteger addPhotoBarButtonItemIndex = [rightBarButtonItems indexOfObject:self.addPhotoBarButtonItem];
+        if (addPhotoBarButtonItemIndex == NSNotFound) {
+            if (canAddPhoto) [rightBarButtonItems addObject:self.addPhotoBarButtonItem];
+        }
+        else {
+            if (!canAddPhoto) [rightBarButtonItems removeObjectAtIndex:addPhotoBarButtonItemIndex];
+        }
+        self.navigationItem.rightBarButtonItems = rightBarButtonItems;
+    }
 }
 
 - (NSArray*) photosByPhotographer {
@@ -135,8 +155,28 @@
     }
 }
 
+// unwinding, i.e. when we hit cancel on the modal segue, this should be invoked.
+- (IBAction)addedPhoto:(UIStoryboardSegue*) segue {
+    if ([segue.sourceViewController isKindOfClass:[PhotomaniaAddPhotoViewController class]]) {
+        PhotomaniaAddPhotoViewController* apvc = (PhotomaniaAddPhotoViewController*) segue.sourceViewController;
+        Photo* addedPhoto = apvc.addedPhoto;
+        if (addedPhoto) {
+            [self.mapView addAnnotation:addedPhoto];
+            [self.mapView showAnnotations:@[addedPhoto] animated:YES];
+            self.photosByPhotographer = nil;
+        }
+        else {
+            NSLog(@"No photo added, but we're trying to unwind!");
+        }
+    }
+}
+
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([sender isKindOfClass:[MKAnnotationView class]]) {
+    if ([segue.destinationViewController isKindOfClass:[PhotomaniaAddPhotoViewController class]]) {
+        PhotomaniaAddPhotoViewController* apvc = (PhotomaniaAddPhotoViewController*) segue.destinationViewController;
+        apvc.photographerTakingPhoto = self.photographer; // check for isUser as well?
+    }
+    else if ([sender isKindOfClass:[MKAnnotationView class]]) {
         [self prepareViewController:segue.destinationViewController forSegue:segue.identifier toShowAnnotation:((MKAnnotationView*)sender).annotation];
     }
 }

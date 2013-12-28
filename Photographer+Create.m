@@ -34,4 +34,12 @@
     return photographer;
 }
 
++ (Photographer*) userInManagedObjectContext:(NSManagedObjectContext *)context {
+    return [self photographerWithName:@" My Photos" inManagedObjectContext:context]; // This is awful! Using a space to ensure sorting. 
+}
+
+- (BOOL) isUser {
+    return  self == [[self class] userInManagedObjectContext:self.managedObjectContext];
+}
+
 @end

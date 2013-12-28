@@ -3,6 +3,7 @@
 #import "Photo+Flickr.h"
 #import "PhotomaniaAppDelegate+MOC.h"
 #import "PhotoDatabaseAvailability.h"
+#import "Photographer+Create.h"
 
 @interface PhotomaniaAppDelegate() <NSURLSessionDownloadDelegate>
 @property (copy, nonatomic) void (^flickrDownloadBackgroundURLSessionCompletionHandler)();
@@ -28,6 +29,9 @@
 
 - (void) setPhotoDatabaseContext:(NSManagedObjectContext *)photoDatabaseContext {
     _photoDatabaseContext = photoDatabaseContext;
+    
+    // Always create user as photographer
+    if (photoDatabaseContext) [Photographer userInManagedObjectContext:photoDatabaseContext];
     
     [NSTimer scheduledTimerWithTimeInterval:20*60 target:self selector:NSSelectorFromString(@"startFlickrFetch:") userInfo:nil repeats:YES];
     
